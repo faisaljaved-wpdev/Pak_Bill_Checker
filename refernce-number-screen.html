@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ur"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "surface-bright": "#f8f9fa",
+              "on-error": "#ffffff",
+              "primary-container": "#004aad",
+              "inverse-surface": "#2e3132",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#ffaf90",
+              "on-primary-fixed-variant": "#00429b",
+              "outline-variant": "#c3c6d5",
+              "primary": "#00357f",
+              "on-tertiary": "#ffffff",
+              "background": "#f8f9fa",
+              "on-secondary-fixed-variant": "#005235",
+              "on-secondary-container": "#00714b",
+              "surface-container-low": "#f3f4f5",
+              "on-error-container": "#93000a",
+              "on-primary": "#ffffff",
+              "secondary": "#006c47",
+              "tertiary-fixed-dim": "#ffb599",
+              "primary-fixed": "#d9e2ff",
+              "on-primary-container": "#a9c1ff",
+              "on-secondary-fixed": "#002113",
+              "on-primary-fixed": "#001945",
+              "error": "#ba1a1a",
+              "tertiary": "#682200",
+              "surface-variant": "#e1e3e4",
+              "surface-tint": "#215abd",
+              "surface-container-highest": "#e1e3e4",
+              "inverse-on-surface": "#f0f1f2",
+              "secondary-fixed": "#8df7c1",
+              "surface": "#f8f9fa",
+              "inverse-primary": "#b0c6ff",
+              "on-tertiary-fixed": "#370e00",
+              "tertiary-fixed": "#ffdbce",
+              "on-background": "#191c1d",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#434653",
+              "surface-container": "#edeeef",
+              "on-surface": "#191c1d",
+              "tertiary-container": "#8e3100",
+              "secondary-fixed-dim": "#71dba6",
+              "surface-dim": "#d9dadb",
+              "on-tertiary-fixed-variant": "#7f2b00",
+              "secondary-container": "#8af5be",
+              "outline": "#737784",
+              "surface-container-high": "#e7e8e9",
+              "primary-fixed-dim": "#b0c6ff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "urdu": ["Jameel Noori Nastaleeq", "serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        @font-face {
+            font-family: 'Jameel Noori Nastaleeq';
+            src: url('https://fonts.cdnfonts.com/s/73114/Jameel Noori Nastaleeq Kasheeda.woff') format('woff');
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nastaleeq {
+            font-family: 'Jameel Noori Nastaleeq', serif;
+            line-height: 1.8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface-bright text-on-surface min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
+  <div class="flex items-center gap-4">
+    <a href="index.html" class="p-2 hover:bg-slate-100 rounded-full transition-colors active:scale-95 duration-200">
+      <span class="material-symbols-outlined text-primary text-2xl" data-icon="arrow_back">arrow_back</span>
+    </a>
+  </div>
+  <div class="flex items-center">
+    <span class="nastaleeq text-xl text-[#00357f] font-bold leading-[1.8]">Pak Bill Checker</span>
+  </div>
+</header>
+<main class="flex-grow pt-24 pb-32 px-6 max-w-2xl mx-auto w-full">
+<!-- Hero Section - Visual Identity -->
+<div class="mb-10 text-center relative">
+<div class="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent rounded-3xl blur-3xl h-64"></div>
+<div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-surface-container-lowest shadow-[0_8px_30px_rgb(0,53,127,0.06)] mb-6 overflow-hidden">
+<img alt="LESCO Logo" class="w-14 h-14 object-contain" data-alt="professional electricity company logo icon with blue and yellow highlights on a clean white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvVNPeBrZjoK3faZ3OVDYs8zwxgME0Muz55_RZnPnfKvuuwY1JF-RTi3wno7aWj0YEbmnKC2JlQKxWvOtuScQj0JJ5lwkb_Ecne__MCUynSIca_O_1i2e5y3vLhAkT-fJr4eIQFw-KtJXL6udjgFa2VJeZgc2PSCdAepqt6lIqjy43eoIPgQf0ZSkT2dkNq5L5e9XIwswEA-A2X7zz9erzUcILACeVQ7Ue2oPNEPlcFZoBLb2dZ0DjmaQ40dXN-2xHQa6BPFqkauA"/>
+</div>
+<h2 class="nastaleeq text-3xl font-bold text-on-surface mb-2">اپنا ریفرنس نمبر درج کریں</h2>
+<p class="text-on-surface-variant font-body text-sm tracking-wide">ENTER YOUR REFERENCE NUMBER</p>
+</div>
+<!-- Reference Input Form -->
+<section class="bg-surface-container-lowest rounded-3xl p-8 shadow-[0_4px_20px_rgba(0,53,127,0.04)] mb-8">
+  <div class="space-y-6">
+    <div class="relative">
+      <input id="billInput" class="w-full h-16 px-6 text-2xl font-headline font-bold tracking-[0.2em] text-center bg-surface-container-highest rounded-2xl border-none focus:ring-2 focus:ring-primary-container focus:bg-surface transition-all placeholder:text-slate-300 placeholder:tracking-normal" dir="ltr" placeholder="14123456789012" type="text"/>
+      <div class="mt-4 flex justify-between items-center">
+        <span class="nastaleeq text-sm text-on-surface-variant">مثال: 14123456789012</span>
+        <span class="material-symbols-outlined text-primary/40" data-icon="info">info</span>
+      </div>
+    </div>
+    <button id="checkBillBtn" class="w-full h-16 bg-gradient-to-br from-primary to-primary-container text-white rounded-full font-headline font-bold text-lg shadow-[0_16px_32px_rgba(0,53,127,0.15)] flex items-center justify-center gap-3 active:scale-[0.98] transition-all group">
+      <span class="nastaleeq text-xl">بل چیک کریں</span>
+      <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="search">search</span>
+    </button>
+    <p class="nastaleeq text-center text-on-surface-variant text-base">
+      اگر آپ کو بجلی کا بل نا ملے تو 3 سیکنڈ بعد دوبارہ کوشش کریں
+    </p>
+  </div>
+</section>
+
+<script>
+  const inputField = document.getElementById('billInput');
+  const checkBtn = document.getElementById('checkBillBtn');
+
+  checkBtn.addEventListener('click', () => {
+    const userInput = inputField.value.trim();
+    // Valid if 8, 10, or 14 digits and numeric
+    if(/^\d{8}$|^\d{10}$|^\d{14}$/.test(userInput)) {
+      const billUrl = `https://bill.pitc.com.pk/pitc/route_access/${userInput}`;
+      window.open(billUrl, '_blank'); // Open in new tab
+    } else {
+      alert('براہ کرم درست 8، 10، یا 14 ہندسوں والا نمبر درج کریں');
+    }
+  });
+</script>
+<!-- Guidelines Section -->
+<section class="bg-surface-container-low rounded-3xl p-8 border border-white/50">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h3 class="nastaleeq text-2xl font-bold text-secondary">ہدایات</h3>
+</div>
+<ul class="space-y-5">
+<li class="flex items-start gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary mt-3"></div>
+<span class="nastaleeq text-lg text-on-surface flex-1">اپنا 14 ہندسوں والا ریفرنس نمبر درج کریں۔</span>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary mt-3"></div>
+<span class="nastaleeq text-lg text-on-surface flex-1">ریفرنس نمبر کے لیے اپنا پرانا بل دیکھیں۔</span>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary mt-3"></div>
+<span class="nastaleeq text-lg text-on-surface flex-1">اس بات کو یقینی بنائیں کہ کوئی جگہ (space) شامل نہیں ہے۔</span>
+</li>
+</ul>
+</section>
+<!-- Visual Aid/Banner -->
+<div class="mt-8 rounded-3xl overflow-hidden relative h-40 group cursor-pointer">
+<img alt="Sample Bill" class="w-full h-full object-cover grayscale opacity-20 group-hover:opacity-30 transition-opacity" data-alt="close up of a professional utility bill document showing where the reference number is located with a soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC51nn7TZc24O4STZILOLc0OuiqxPWHkA1ZKSNb7sjiUg3BDc1_O6V6OCJR6wpQcSAQLIB9XCd4Nq6C1AW4HhQbn_AoDNuhU58DhW58ZGVRjrosrcwnGvjQ7kO2XstkgJCHi5svX4jVWfiaiv6hrjKHB77iWR3r2LvlAZ5Jdsw2z1wY4BRCakNE2s0An-f0a6tffkcbxQUZUV5WzDNVroU-BVhSzoPLkJYzcs2SDjQGsY8thZELsBO0ZY2QFHPRbx4uAZCKIUxKnI0"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center bg-primary/10">
+<span class="material-symbols-outlined text-primary mb-2" data-icon="receipt_long">receipt_long</span>
+<span class="nastaleeq text-lg font-bold text-primary">بل پر ریفرنس نمبر کہاں ہوتا ہے؟</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-4px_20px_rgba(0,53,127,0.06)] rounded-t-[24px] flex justify-around items-center px-4 pb-4 pt-2 border-t border-slate-100">
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1.5 hover:text-[#00357f] transition-colors" href="index.html">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="nastaleeq text-lg leading-[1.5]">ہوم</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1.5 hover:text-[#00357f] transition-colors" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+<span class="nastaleeq text-lg leading-[1.5]">شیئر</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#004aad]/10 text-[#00357f] rounded-2xl px-6 py-1.5 active:scale-90 duration-150 ease-out" href="https://play.google.com/store/apps/developer?id=Fasial+Javed">
+<span class="material-symbols-outlined" data-icon="more_horiz" style="font-variation-settings: 'FILL' 1;">more_horiz</span>
+<span class="nastaleeq text-lg leading-[1.5]">مزید</span>
+</a>
+</nav>
+<script>
+  (function() {
+    const companyMap = {
+      'LESCO': 'لیسکو (LESCO)',
+      'IESCO': 'آئیسکو (IESCO)',
+      'K-Electric': 'کے الیکٹرک (K-Electric)',
+      'PESCO': 'پیسکو (PESCO)',
+      'GEPCO': 'گیپکو (GEPCO)',
+      'FESCO': 'فیسکو (FESCO)',
+      'MEPCO': 'میپکو (MEPCO)',
+      'HESCO': 'حیسکو (HESCO)',
+      'SEPCO': 'سیپکو (SEPCO)',
+      'QESCO': 'کیسکو (QESCO)'
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCompany = urlParams.get('company') || window.selectedCompany || 'LESCO';
+    
+    const titleElement = document.getElementById('company-title');
+    if (titleElement && companyMap[selectedCompany]) {
+      titleElement.textContent = companyMap[selectedCompany];
+    }
+  })();
+</script></body></html>
