@@ -462,8 +462,13 @@
     return `https://bill.pitc.com.pk/pitc/route_access/${refNumber}`;
   }
 
-  // Validate: accept 8, 10, or 14 digit numeric strings (matches refernce-number-screen.html)
-  function isValidRef(val) {
+  // Validate reference number based on company requirements
+  function isValidRef(company, val) {
+    // LESCO requires exactly 14 digits
+    if (company === 'LESCO') {
+      return /^\d{14}$/.test(val);
+    }
+    // Other companies accept 8, 10, or 14 digits
     return /^\d{8}$|^\d{10}$|^\d{14}$/.test(val);
   }
 
@@ -491,11 +496,15 @@
   // ---- Check Bill Button ----
   document.getElementById('checkBillBtn').addEventListener('click', () => {
     const userInput = document.getElementById('billInput').value.trim();
-    if (isValidRef(userInput)) {
+    if (isValidRef(currentCompany, userInput)) {
       const url = getBillUrl(currentCompany, userInput);
       window.open(url, '_blank');
     } else {
-      alert('براہ کرم درست 8، 10، یا 14 ہندسوں والا نمبر درج کریں');
+      if (currentCompany === 'LESCO') {
+        alert('براہ کرم 14 ہندسوں کا صحیح حوالہ نمبر درج کریں');
+      } else {
+        alert('براہ کرم درست 8، 10، یا 14 ہندسوں والا نمبر درج کریں');
+      }
     }
   });
 
