@@ -38,6 +38,29 @@
   .fonts-loaded .material-symbols-outlined {
     opacity: 1;
   }
+
+  /* Loading spinner for navigation elements */
+  .js-delay-nav.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+  }
+  .js-delay-nav.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 </style>
 <script id="tailwind-config">
   tailwind.config = {
@@ -102,15 +125,15 @@
         <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">share</span>
         <span class="nastaleeq text-xl text-slate-700">ایپ شیئر کریں</span>
       </button>
-      <a class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
+      <a class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95 js-delay-nav" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
         <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">star</span>
         <span class="nastaleeq text-xl text-slate-700">ہمیں ریٹ کریں</span>
       </a>
-      <a href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+      <a href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95 js-delay-nav">
         <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">apps</span>
         <span class="nastaleeq text-xl text-slate-700">مزید ایپس</span>
       </a>
-      <a href="https://faisaljaved.pro" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+      <a href="https://faisaljaved.pro" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95 js-delay-nav">
         <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">info</span>
         <span class="nastaleeq text-xl text-slate-700">ہمارے بارے میں جانیں</span>
       </a>
@@ -128,7 +151,7 @@
           </div>
         </div>
       </div>
-      <a href="privacy-policy.html" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+      <a href="privacy-policy.html" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95 js-delay-nav">
         <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">shield</span>
         <span class="nastaleeq text-xl text-slate-700">پرائیویسی پالیسی</span>
       </a>
@@ -197,9 +220,10 @@
     <!-- Company Grid -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="company-grid">
 
-      <a class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow"
-         data-search-term="K-Electric Karachi کراچی keelectric کے الیکٹرک"
-         href="https://staging.ke.com.pk:24555/" target="_blank">
+      <a class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow js-delay-nav"
+         data-href="https://staging.ke.com.pk:24555/"
+         href="https://staging.ke.com.pk:24555/"
+         target="_blank">
         <div class="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
           <img alt="KE" class="w-12 h-12 object-contain" src="kelectric.png"/>
         </div>
@@ -343,15 +367,15 @@
 
   <!-- Bottom Nav -->
   <nav class="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-4px_20px_rgba(0,53,127,0.06)] rounded-t-[24px] flex justify-around items-center px-4 py-2 border-t border-slate-100 bottom-nav">
-    <a class="flex flex-col items-center justify-center text-[#00357f] px-4 py-1" href="#" onclick="showHome(); return false;">
+    <a class="flex flex-col items-center justify-center text-[#00357f] px-4 py-1 js-delay-nav" data-action="showHome" href="#">
       <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">home</span>
       <span class="nastaleeq text-lg leading-[1.3]">ہوم</span>
     </a>
-    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
+    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors js-delay-nav" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
       <span class="material-symbols-outlined">share</span>
       <span class="nastaleeq text-lg leading-[1.3]">شیئر</span>
     </a>
-    <a class="flex flex-col items-center justify-center bg-[#004aad]/10 text-[#00357f] rounded-2xl px-6 py-1 active:scale-90 duration-150" href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank">
+    <a class="flex flex-col items-center justify-center bg-[#004aad]/10 text-[#00357f] rounded-2xl px-6 py-1 active:scale-90 duration-150 js-delay-nav" href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank">
       <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">more_horiz</span>
       <span class="nastaleeq text-lg leading-[1.3]">مزید</span>
     </a>
@@ -446,15 +470,15 @@
 
   <!-- Bottom Nav (Ref page) -->
   <nav class="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-4px_20px_rgba(0,53,127,0.06)] rounded-t-[24px] flex justify-around items-center px-4 py-2 border-t border-slate-100 bottom-nav">
-    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors" href="#" onclick="showHome(); return false;">
+    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors js-delay-nav" data-action="showHome" href="#">
       <span class="material-symbols-outlined">home</span>
       <span class="nastaleeq text-lg leading-[1.3]">ہوم</span>
     </a>
-    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
+    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors js-delay-nav" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
       <span class="material-symbols-outlined">share</span>
       <span class="nastaleeq text-lg leading-[1.3]">شیئر</span>
     </a>
-    <a class="flex flex-col items-center justify-center bg-[#004aad]/10 text-[#00357f] rounded-2xl px-6 py-1 active:scale-90 duration-150" href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank">
+    <a class="flex flex-col items-center justify-center bg-[#004aad]/10 text-[#00357f] rounded-2xl px-6 py-1 active:scale-90 duration-150 js-delay-nav" href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank">
       <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">more_horiz</span>
       <span class="nastaleeq text-lg leading-[1.3]">مزید</span>
     </a>
@@ -589,6 +613,51 @@
     if (currentCompany) {
       localStorage.setItem('ref_' + currentCompany, this.value);
     }
+  });
+
+  // ---- Generic Delayed Navigation for Links and Actions ----
+  document.addEventListener('click', function(e) {
+    const el = e.target.closest('.js-delay-nav');
+    if (!el) return;
+
+    // Prevent multiple triggers
+    if (el.classList.contains('loading')) {
+      e.preventDefault();
+      return;
+    }
+
+    e.preventDefault();
+
+    // Add loading visual feedback
+    el.classList.add('loading');
+    el.style.pointerEvents = 'none';
+
+    // Determine navigation target
+    const url = el.dataset.href || el.getAttribute('href');
+    const target = el.getAttribute('target') || '_self';
+    const action = el.getAttribute('data-action');
+
+    setTimeout(() => {
+      if (action) {
+        // Execute JavaScript action (e.g., goHome, copyAppLink)
+        if (typeof window[action] === 'function') {
+          window[action]();
+        }
+      } else if (url && url !== '#' && url !== 'javascript:void(0)') {
+        // Navigate to URL
+        if (target === '_blank') {
+          window.open(url, '_blank');
+        } else {
+          window.location.href = url;
+        }
+      }
+
+      // Remove loading state after a short delay
+      setTimeout(() => {
+        el.classList.remove('loading');
+        el.style.pointerEvents = '';
+      }, 100);
+    }, 50);
   });
 
   // ---- Keyboard detection for bottom nav (hide when keyboard opens) ----
