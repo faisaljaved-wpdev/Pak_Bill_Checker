@@ -456,7 +456,7 @@
       const batchNo = refNumber.substring(0, 2);
       const subDiv  = refNumber.substring(2, 7);
       const refNo   = refNumber.substring(7);
-      return `http://www.lesco.gov.pk:36269/BillNew.aspx?BatchNo=${batchNo}&SubDiv=${subDiv}&RefNo=${refNo}&RU=U`;
+      return `http://www.lesco.gov.pk:36247/Bill.aspx?BatchNo=${batchNo}&SubDiv=${subDiv}&RefNo=${refNo}&RU=U&CapCode=QAED`;
     }
     // All other PITC companies use the generic route
     return `https://bill.pitc.com.pk/pitc/route_access/${refNumber}`;
