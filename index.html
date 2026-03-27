@@ -29,6 +29,15 @@
   /* Bottom nav transition for keyboard handling */
   .bottom-nav { transition: transform 0.3s ease, opacity 0.3s ease; }
   .keyboard-visible .bottom-nav { transform: translateY(100%); opacity: 0; pointer-events: none; }
+
+  /* Hide icons until Material Symbols font loads to prevent FOUT */
+  .material-symbols-outlined {
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+  }
+  .fonts-loaded .material-symbols-outlined {
+    opacity: 1;
+  }
 </style>
 <script id="tailwind-config">
   tailwind.config = {
@@ -457,6 +466,15 @@
   // ---- State ----
   let currentCompany = '';
   let currentPage = 'home';
+  let isLoading = false;
+
+  // ---- Font Loading - Show icons immediately when fonts ready ----
+  document.fonts.ready.then(() => {
+    document.body.classList.add('fonts-loaded');
+  }).catch(() => {
+    // If font loading fails, still show icons
+    document.body.classList.add('fonts-loaded');
+  });
 
   // ---- Navigation with History Support ----
   function renderHome() {
@@ -467,6 +485,7 @@
 
   function goHome() {
     currentPage = 'home';
+    currentCompany = '';
     renderHome();
   }
 
@@ -520,24 +539,49 @@
     return /^\d{8}$|^\d{10}$|^\d{14}$/.test(val);
   }
 
-  // ---- Check Bill Button ----
-  document.getElementById('checkBillBtn').addEventListener('click', () => {
+  // ---- Check Bill Button with Loading Indicator ----
+  const checkBillBtn = document.getElementById('checkBillBtn');
+  const originalBtnText = '<span class="nastaleeq text-xl">بل چیک کریں</span><span class="material-symbols-outlined">search</span>';
+  const loadingBtnText = '<span class="nastaleeq text-xl">جاری ہے...</span><span class="material-symbols-outlined">hourglass_empty</span>';
+
+  checkBillBtn.addEventListener('click', () => {
+    if (isLoading) return; // Prevent multiple clicks
+
     const userInput = document.getElementById('billInput').value.trim();
-    if (isValidRef(currentCompany, userInput)) {
-      const url = getBillUrl(currentCompany, userInput);
-      window.open(url, '_blank');
-    } else {
+    if (!isValidRef(currentCompany, userInput)) {
       if (currentCompany === 'LESCO') {
         alert('براہ کرم 14 ہندسوں کا صحیح حوالہ نمبر درج کریں');
       } else {
         alert('براہ کرم درست 8، 10، یا 14 ہندسوں والا نمبر درج کریں');
       }
+      return;
     }
+
+    // Show immediate loading feedback
+    isLoading = true;
+    checkBillBtn.disabled = true;
+    checkBillBtn.innerHTML = loadingBtnText;
+    checkBillBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
+    const url = getBillUrl(currentCompany, userInput);
+
+    // Give UI a chance to update, then open the link
+    setTimeout(() => {
+      window.open(url, '_blank');
+
+      // Reset button after a short delay
+      setTimeout(() => {
+        isLoading = false;
+        checkBillBtn.disabled = false;
+        checkBillBtn.innerHTML = originalBtnText;
+        checkBillBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+      }, 500);
+    }, 50);
   });
 
   // Allow pressing Enter in input field
   document.getElementById('billInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') document.getElementById('checkBillBtn').click();
+    if (e.key === 'Enter') checkBillBtn.click();
   });
 
   // ---- Persist User Input ----
@@ -547,17 +591,39 @@
     }
   });
 
-  // ---- Keyboard handling for bottom nav (hide when typing) ----
+  // ---- Keyboard detection for bottom nav (hide when keyboard opens) ----
+  let isInputFocused = false;
+  let lastViewportHeight = window.innerHeight;
+  const keyboardHeightThreshold = 150; // pixels
+
+  function handleViewportChange() {
+    const currentHeight = window.innerHeight;
+    const diff = lastViewportHeight - currentHeight;
+
+    if (diff > keyboardHeightThreshold && isInputFocused) {
+      document.body.classList.add('keyboard-visible');
+    } else if (currentHeight - lastViewportHeight > keyboardHeightThreshold / 2) {
+      document.body.classList.remove('keyboard-visible');
+      isInputFocused = false;
+    }
+
+    lastViewportHeight = currentHeight;
+  }
+
   document.querySelectorAll('input').forEach(input => {
     input.addEventListener('focus', () => {
-      document.body.classList.add('keyboard-visible');
-    });
-    input.addEventListener('blur', () => {
-      setTimeout(() => {
-        document.body.classList.remove('keyboard-visible');
-      }, 100);
+      isInputFocused = true;
+      const currentHeight = window.innerHeight;
+      if (lastViewportHeight - currentHeight > keyboardHeightThreshold) {
+        document.body.classList.add('keyboard-visible');
+      }
     });
   });
+
+  window.addEventListener('resize', handleViewportChange);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', handleViewportChange);
+  }
 
   // ---- Browser back button support ----
   window.addEventListener('popstate', (e) => {
