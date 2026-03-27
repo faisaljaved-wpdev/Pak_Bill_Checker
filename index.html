@@ -1,625 +1,577 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="ur">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electricity Bill Check</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-
-        #main-content, #page2, #page3 {
-            display: none;
-        }
-
-        header {
-            background-color: #003366;
-            color: white;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 22px;
-        }
-
-        .tagline {
-            font-size: 14px;
-            color: #dcdcdc;
-            margin-top: 5px;
-        }
-
-        .menu-icon {
-            position: absolute;
-            left: 10px;
-            top: 5px;
-            cursor: pointer;
-            font-size: 22px;
-        }
-
-        #sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #003366;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-
-        #sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: white;
-            display: block;
-            transition: 0.3s;
-        }
-
-        #sidebar a:hover {
-            background-color: #002244;
-        }
-
-        #sidebar .close-btn {
-            position: absolute;
-            top: 0;
-            right: 10px;
-            font-size: 36px;
-        }
-
-        #sidebar .sidebar-header {
-            text-align: center;
-            padding: 20px;
-            background-color: #002244;
-            margin-bottom: 20px;
-        }
-
-        #sidebar .sidebar-header img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10%;
-            margin-bottom: 10px;
-        }
-
-        #sidebar .sidebar-header h2 {
-            margin: 0;
-            font-size: 20px;
-            color: white;
-        }
-
-        #sidebar .sidebar-header p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #dcdcdc;
-        }
-
-        #sidebar a i {
-            margin-right: 10px;
-        }
-
-        .company-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .company {
-            text-align: center;
-            padding: 15px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .company:hover {
-            transform: scale(1.05);
-        }
-
-        .company img {
-            max-width: 80px;
-            margin-bottom: 10px;
-        }
-
-        .company p {
-            margin: 5px 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .company span {
-            color: #666;
-            font-size: 14px;
-        }
-
-        #page2 {
-            padding: 0px;
-            text-align: center;
-        }
-
-        #page2 h4 {
-            text-align: left;
-            margin-left: 15px;
-            margin-bottom: 8px;
-            font-size: clamp(16px, 5vw, 18px);
-            color: #003366;
-        }
-
-        #page2 .urdu-text {
-            font-family: 'Jameel Noori Nastaleeq', Arial, sans-serif;
-            font-size: clamp(18px, 5vw, 20px);
-            color: #003366;
-            text-align: left;
-            margin-left: 15px;
-            margin-bottom: 8px;
-            direction: rtl;
-        }
-
-        #page2 input {
-            width: calc(100% - 32px);
-            max-width: 500px;
-            padding: 10px;
-            margin: 0 auto 20px auto;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: clamp(14px, 4vw, 16px);
-            text-align: left;
-            display: block;
-            box-sizing: border-box;
-        }
-
-        #page2 .buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            padding: 0 15px;
-        }
-
-        #page2 button {
-            width: 100%;
-            max-width: 500px;
-            padding: clamp(10px, 3vw, 12px);
-            border: none;
-            border-radius: 8px;
-            background: #003366;
-            color: white;
-            cursor: pointer;
-            font-size: clamp(16px, 5vw, 18px);
-            transition: background 0.2s;
-            box-sizing: border-box;
-        }
-
-        #page2 button:hover {
-            background: #002244;
-        }
-
-        #page2 .instruction-text {
-            font-size: clamp(18px, 5vw, 20px);
-            color: #003366;
-            text-align: center;
-            margin: 5px 0;
-        }
-
-        #page2 .instruction-text.urdu {
-            font-family: 'Jameel Noori Nastaleeq', Arial, sans-serif;
-            direction: rtl;
-        }
-
-        @media (max-width: 600px) {
-            #page2 h4 {
-                margin-left: 10px;
-                font-size: 16px;
-            }
-
-            #page2 .urdu-text {
-                margin-left: 10px;
-                font-size: 18px;
-            }
-
-            #page2 input {
-                width: calc(100% - 20px);
-                padding: 8px;
-                font-size: 14px;
-            }
-
-            #page2 .buttons {
-                padding: 0 10px;
-            }
-
-            #page2 button {
-                padding: 10px;
-                font-size: 16px;
-            }
-
-            #page2 .instruction-text {
-                font-size: 18px;
-            }
-        }
-
-        iframe {
-            width: 100%;
-            height: 100vh;
-            border: none;
-        }
-
-        .support-dropdown {
-            position: relative;
-        }
-
-        .support-link {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: white;
-            transition: background-color 0.3s;
-        }
-
-        .support-link:hover {
-            background-color: #002244;
-        }
-
-        .dropdown-content {
-            max-height: 0;
-            overflow: hidden;
-            background-color: #003366;
-            transition: max-height 0.3s ease-in-out;
-        }
-
-        .dropdown-content p {
-            margin: 0;
-            padding: 10px 15px;
-            font-size: 14px;
-            color: #dcdcdc;
-        }
-
-        .support-dropdown.active .dropdown-content {
-            max-height: 200px;
-        }
-
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .popup-content {
-            background: linear-gradient(to bottom, #003366, #0066cc);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            margin-left: 20px;
-            margin-right: 20px;
-            max-height: 80%;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            border: 2px solid white;
-        }
-
-        .popup-content h2 {
-            margin-top: 0;
-            border-bottom: 2px solid white;
-            padding-bottom: 5px;
-        }
-
-        .popup-content p {
-            margin: 10px 0;
-            line-height: 1.5;
-        }
-
-        .popup-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: white;
-            color: #003366;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .popup-button {
-            display: block;
-            margin: 20px auto 0;
-            padding: 10px 20px;
-            background-color: white;
-            color: #003366;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7487419262645643" crossorigin="anonymous"></script>
-    <script>
-  function shareApp() {
-    const appLink = "https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker";
-
-    // Try to use Web Share API (mobile browsers mostly support this)
-    if (navigator.share) {
-      navigator.share({
-        title: "Pak Bill Checker App",
-        text: "Check all electricity bills in Pakistan instantly.",
-        url: appLink
-      }).then(() => {
-        copyToClipboard(appLink);
-        alert("Link copied to clipboard!");
-      }).catch((error) => {
-        console.error("Share failed:", error);
-        copyToClipboard(appLink);
-        alert("Link copied to clipboard!");
-      });
-    } else {
-      // Fallback for desktop browsers
-      copyToClipboard(appLink);
-      alert("Link copied to clipboard!");
-    }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  @font-face {
+    font-family: 'Jameel Noori Nastaleeq';
+    src: url('https://fonts.cdnfonts.com/s/73918/JameelNooriNastaleeq.woff') format('woff');
   }
-
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).catch(err => {
-      console.error('Failed to copy text: ', err);
-    });
+  .font-urdu { font-family: 'Jameel Noori Nastaleeq', serif; }
+  .nastaleeq { font-family: 'Jameel Noori Nastaleeq', serif; line-height: 1.8; }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
-</script>
-    <script>
-  function openExternal(url) {
-    window.open(url, '_system');
+  .premium-shadow { box-shadow: 0 32px 64px -12px rgba(0, 53, 127, 0.08); }
+  body { min-height: max(884px, 100dvh); overflow-y: auto; }
+  #sidebarPanel { overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  #sidebarPanel::-webkit-scrollbar { display: none; }
+  #page-home, #page-ref { transition: opacity 0.2s ease; }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary-container": "#004aad",
+          "primary": "#00357f",
+          "secondary": "#006c47",
+          "surface-bright": "#f8f9fa",
+          "surface-container-low": "#f3f4f5",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-highest": "#e1e3e4",
+          "surface-container-high": "#e7e8e9",
+          "surface-container": "#edeeef",
+          "on-surface": "#191c1d",
+          "on-surface-variant": "#434653",
+          "on-primary": "#ffffff",
+          "on-primary-container": "#a9c1ff",
+          "outline": "#737784",
+          "outline-variant": "#c3c6d5",
+          "primary-fixed": "#d9e2ff",
+          "on-primary-fixed": "#001945",
+          "error": "#ba1a1a",
+        },
+        fontFamily: { "headline": ["Manrope"], "body": ["Inter"] },
+        borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+      },
+    },
   }
 </script>
 </head>
-<body>
-    <div id="sidebar">
-        <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">×</a>
-        <div class="sidebar-header">
-            <img src="logo.jpeg" alt="Logo">
-            <h2>Electricity Bill Check</h2>
-            <p>Easily check your electricity bill online</p>
+<body class="bg-surface-bright font-body text-on-surface">
+
+<!-- ===================== SIDEBAR ===================== -->
+<div id="sidebarOverlay" class="fixed inset-0 z-[60] hidden">
+  <div id="sidebarBackdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <aside id="sidebarPanel" class="absolute top-0 right-0 h-full w-[85%] max-w-[320px] bg-white shadow-2xl transition-transform duration-300 transform translate-x-full flex flex-col rounded-l-[32px]" style="box-shadow: -20px 0 60px rgba(0,53,127,0.15);">
+    <header class="relative p-8 pb-10 bg-gradient-to-br from-primary to-primary-container text-white overflow-hidden">
+      <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/20 rounded-full blur-2xl"></div>
+      <div class="relative z-10 flex flex-col items-start gap-4">
+        <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center p-3 shadow-lg">
+          <span class="material-symbols-outlined text-4xl" style='font-variation-settings:"FILL" 1;'>account_balance_wallet</span>
         </div>
-        <a href="#" onclick="showPopup()"><i class="fas fa-exclamation-circle"></i> Disclaimer</a>
-<a href="#" onclick="shareApp(); return false;">
-  <i class="fas fa-share-alt"></i> Share App
-</a>        <a href="#"><i class="fas fa-star"></i> Rate Us</a>
-<a href="https://play.google.com/store/apps/developer?id=Miya+ji" target="_blank" rel="noopener noreferrer">
-  <i class="fas fa-th"></i> More Apps
-</a>
-<a href="#" onclick="openExternal('https://www.faisaljaved.pro')">
-  <i class="fas fa-info-circle"></i> About Us
-</a>
-        <div class="support-dropdown">
-            <a href="#" class="support-link" onclick="toggleDropdown(event)"><i class="fas fa-envelope"></i> Contact Us</a>
-            <div class="dropdown-content">
-                <p>Whatsapp: +92 345 0357191</p>
+        <div>
+          <h1 class="nastaleeq text-3xl font-bold leading-none tracking-tight">پاک بل چیکر</h1>
+          <p class="nastaleeq text-sm opacity-90 mt-2 leading-relaxed">آپ کا قابل اعتماد ڈیجیٹل بل ساتھی</p>
+        </div>
+      </div>
+      <button id="closeSidebarBtn" class="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+        <span class="material-symbols-outlined text-white">close</span>
+      </button>
+    </header>
+    <nav class="flex-1 py-6 px-4 flex flex-col gap-3 overflow-y-auto">
+      <button onclick="openDisclaimer()" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">gavel</span>
+        <span class="nastaleeq text-xl text-slate-700">ڈس کلیمر</span>
+      </button>
+      <button onclick="copyAppLink()" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">share</span>
+        <span class="nastaleeq text-xl text-slate-700">ایپ شیئر کریں</span>
+      </button>
+      <a class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
+        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">star</span>
+        <span class="nastaleeq text-xl text-slate-700">ہمیں ریٹ کریں</span>
+      </a>
+      <a href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">apps</span>
+        <span class="nastaleeq text-xl text-slate-700">مزید ایپس</span>
+      </a>
+      <a href="https://faisaljaved.pro" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">info</span>
+        <span class="nastaleeq text-xl text-slate-700">ہمارے بارے میں جانیں</span>
+      </a>
+      <div class="w-full rounded-2xl bg-surface-container-lowest border border-slate-50 overflow-hidden">
+        <div class="flex items-center gap-4 px-4 py-3.5">
+          <span class="material-symbols-outlined text-primary">support_agent</span>
+          <span class="nastaleeq text-xl text-slate-700">ہم سے رابطہ کریں</span>
+        </div>
+        <div class="px-4 py-3 bg-secondary/5 border-t border-secondary/10">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+              <span class="material-symbols-outlined text-secondary text-lg" style='font-variation-settings:"FILL" 1;'>chat</span>
             </div>
+            <span class="text-xs font-medium text-secondary tracking-wider">0345-0357191</span>
+          </div>
         </div>
-        <div class="support-dropdown">
-            <a href="#" class="support-link" onclick="toggleDropdown(event)"><i class="fas fa-hand-holding-heart"></i> Support Us</a>
-            <div class="dropdown-content">
-                <p>Aap ka support is muft service ko jari rakhne aur naye projects shuru karne mein bahut ahmiyat rkhta hai. Donate ya share karein! <br> Jazz Cash: 03450357191</p>
-            </div>
+      </div>
+      <a href="privacy-policy.html" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-surface-container-low transition-all duration-200 group active:scale-95">
+        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">shield</span>
+        <span class="nastaleeq text-xl text-slate-700">پرائیویسی پالیسی</span>
+      </a>
+    </nav>
+    <footer class="p-8 bg-surface-container-lowest text-center">
+      <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Version 2.4.0</p>
+      <p class="nastaleeq text-sm text-slate-500">پاکستان کا نمبر 1 بل چیکر</p>
+    </footer>
+  </aside>
+</div>
+
+<!-- ===================== DISCLAIMER MODAL ===================== -->
+<div id="disclaimerModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/50">
+  <div class="bg-white rounded-2xl p-6 max-w-md w-[90%] text-center relative">
+    <h2 class="nastaleeq text-2xl mb-4">ڈس کلیمر</h2>
+    <p class="nastaleeq text-lg text-slate-700 leading-relaxed">
+      یہ ایپ کسی سرکاری ادارے کی نمائندگی نہیں کرتی۔ یہ ایپ کسی بھی حکومت یا بجلی کے ادارے سے وابستہ نہیں ہے۔
+      اس ایپ میں دی گئی معلومات صرف عام معلومات کے مقاصد کے لیے ہے۔ تمام ڈیٹا عوامی آن لائن ذرائع سے حاصل کیا جاتا ہے۔
+    </p>
+    <button onclick="closeDisclaimer()" class="mt-6 px-6 py-2 bg-primary text-white rounded-xl nastaleeq text-lg">ٹھیک ہے</button>
+  </div>
+</div>
+
+<!-- ===================== PAGE 1: HOME ===================== -->
+<div id="page-home">
+  <!-- Top App Bar -->
+  <header class="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
+    <div class="flex items-center gap-4">
+      <button id="openSidebarBtn" class="p-2 rounded-full hover:bg-slate-100 transition-colors active:scale-95 duration-200">
+        <span class="material-symbols-outlined text-[#00357f]">menu</span>
+      </button>
+      <h1 class="nastaleeq text-2xl leading-[1.8] tracking-normal text-[#00357f]">پاک بل چیکر</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="p-2 rounded-full hover:bg-slate-100 transition-colors">
+        <span class="material-symbols-outlined text-slate-600">notifications</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
+    <!-- Hero Banner -->
+    <section class="mb-10">
+      <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary to-primary-container p-8 text-white premium-shadow">
+        <div class="relative z-10">
+          <span class="text-xs font-bold uppercase tracking-widest opacity-80 mb-2 block">خوش آمدید</span>
+          <h2 class="text-3xl font-headline font-bold mb-4 leading-tight">اپنا بجلی کا بل فوری <br/> تلاش کریں</h2>
+          <p class="text-on-primary-container text-sm max-w-xs opacity-90 leading-relaxed nastaleeq">پاکستان کی تمام بڑی بجلی فراہم کرنے والی کمپنیوں کے بل اب ایک ہی جگہ دستیاب ہیں۔</p>
         </div>
-        <a href="https://faisaljaved-wpdev.github.io/Pak_Bill_Checker/privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+        <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+        <div class="absolute -top-10 -left-10 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 opacity-20 md:opacity-100">
+          <span class="material-symbols-outlined text-[120px]" style="font-variation-settings:'FILL' 1;">electric_bolt</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search -->
+    <div class="mb-10">
+      <div class="relative">
+        <span class="absolute right-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+        <input class="w-full h-14 pr-14 pl-6 bg-surface-container-highest rounded-full border-none focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all duration-300 nastaleeq text-lg" id="search-input" placeholder="کمپنی تلاش کریں..." type="text"/>
+      </div>
     </div>
 
-    <div id="main-content" style="display: block;">
-        <header>
-            <div class="menu-icon" onclick="openSidebar()">☰</div>
-            <div>
-                <h1>Electricity Bill Check</h1>
-                <p class="tagline">Easily check your electricity bill online</p>
-            </div>
-        </header>
+    <!-- Company Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="company-grid">
 
-        <div class="company-grid">
-            <div class="company" onclick="window.location.href='https://staging.ke.com.pk:24555/'">
-                <img src="kelectric.png" alt="K-Electric">
-                <p>K-Electric</p>
-                <span>Karachi</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('LESCO', 'http://www.lesco.gov.pk:36247/Bill.aspx')">
-                <img src="lesco.png" alt="LESCO">
-                <p>LESCO</p>
-                <span>Lahore</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('IESCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="iesco.png" alt="IESCO">
-                <p>IESCO</p>
-                <span>Islamabad</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('FESCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="fesco.png" alt="FESCO">
-                <p>FESCO</p>
-                <span>Faisalabad</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('GEPCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="gepco.png" alt="GEPCO">
-                <p>GEPCO</p>
-                <span>Gujranwala</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('MEPCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="mepco.png" alt="MEPCO">
-                <p>MEPCO</p>
-                <span>Multan</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('PESCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="pesco.png" alt="PESCO">
-                <p>PESCO</p>
-                <span>KPK</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('HESCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="hesco.png" alt="HESCO">
-                <p>HESCO</p>
-                <span>Hyderabad</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('QESCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="qesco.png" alt="QESCO">
-                <p>QESCO</p>
-                <span>Quetta</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('SEPCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="sepco.png" alt="SEPCO">
-                <p>SEPCO</p>
-                <span>Sukkur</span>
-            </div>
-            <div class="company" onclick="navigateToPage2('TESCO', 'https://bill.pitc.com.pk/pitc/route_access/')">
-                <img src="tesco.png" alt="TESCO">
-                <p>TESCO</p>
-                <span>Tribal Areas</span>
-            </div>
+      <a class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow"
+         data-search-term="K-Electric Karachi کراچی keelectric کے الیکٹرک"
+         href="https://staging.ke.com.pk:24555/" target="_blank">
+        <div class="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="KE" class="w-12 h-12 object-contain" src="kelectric.png"/>
         </div>
+        <h3 class="font-headline font-bold text-on-surface">K-Electric</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">کراچی</p>
+      </a>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="LESCO Lahore لاہور lesco"
+           onclick="showRefPage('LESCO', 'لاہور', 'lesco.png', 'lesco')">
+        <div class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="LESCO" class="w-12 h-12 object-contain" src="lesco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">LESCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">لاہور</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="IESCO Islamabad اسلام آباد iesco"
+           onclick="showRefPage('IESCO', 'اسلام آباد', 'iesco.png', 'iesco')">
+        <div class="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="IESCO" class="w-12 h-12 object-contain" src="iesco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">IESCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">اسلام آباد</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="FESCO Faisalabad فیصل آباد fesco"
+           onclick="showRefPage('FESCO', 'فیصل آباد', 'fesco.png', 'fesco')">
+        <div class="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="FESCO" class="w-12 h-12 object-contain" src="fesco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">FESCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">فیصل آباد</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="GEPCO Gujranwala گوجرانوالہ gepco"
+           onclick="showRefPage('GEPCO', 'گوجرانوالہ', 'gepco.png', 'gepco')">
+        <div class="w-16 h-16 rounded-2xl bg-teal-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="GEPCO" class="w-12 h-12 object-contain" src="gepco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">GEPCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">گوجرانوالہ</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="MEPCO Multan ملتان mepco"
+           onclick="showRefPage('MEPCO', 'ملتان', 'mepco.png', 'mepco')">
+        <div class="w-16 h-16 rounded-2xl bg-yellow-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="MEPCO" class="w-12 h-12 object-contain" src="mepco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">MEPCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">ملتان</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="PESCO Peshawar پشاور pesco"
+           onclick="showRefPage('PESCO', 'پشاور', 'pesco.png', 'pesco')">
+        <div class="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="PESCO" class="w-12 h-12 object-contain" src="pesco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">PESCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">پشاور</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="HESCO Hyderabad حیدرآباد hesco"
+           onclick="showRefPage('HESCO', 'حیدرآباد', 'hesco.png', 'hesco')">
+        <div class="w-16 h-16 rounded-2xl bg-cyan-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="HESCO" class="w-12 h-12 object-contain" src="hesco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">HESCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">حیدرآباد</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="QESCO Quetta کوئٹہ qesco"
+           onclick="showRefPage('QESCO', 'کوئٹہ', 'qesco.png', 'qesco')">
+        <div class="w-16 h-16 rounded-2xl bg-stone-100 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="QESCO" class="w-12 h-12 object-contain" src="qesco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">QESCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">کوئٹہ</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="SEPCO Sukkur سکھر sepco"
+           onclick="showRefPage('SEPCO', 'سکھر', 'sepco.png', 'sepco')">
+        <div class="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="SEPCO" class="w-12 h-12 object-contain" src="sepco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">SEPCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">سکھر</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-lowest p-6 rounded-[1.5rem] flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl premium-shadow cursor-pointer"
+           data-search-term="TESCO Tribal Areas قبائلی علاقہ جات tesco"
+           onclick="showRefPage('TESCO', 'قبائلی علاقہ جات', 'tesco.png', 'tesco')">
+        <div class="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <img alt="TESCO" class="w-12 h-12 object-contain" src="tesco.png"/>
+        </div>
+        <h3 class="font-headline font-bold text-on-surface">TESCO</h3>
+        <p class="nastaleeq text-sm text-outline mt-1">قبائلی علاقہ جات</p>
+      </div>
+
+      <div class="company-card group relative bg-surface-container-low p-6 rounded-[1.5rem] flex flex-col items-start justify-end text-right transition-all duration-300 overflow-hidden min-h-[180px]"
+           data-search-term="مدد چاہیے help reference number">
+        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background: radial-gradient(circle at top right, #00357f, transparent)"></div>
+        <span class="material-symbols-outlined text-primary mb-auto">help_outline</span>
+        <p class="nastaleeq text-on-surface font-semibold text-lg leading-snug">مدد چاہیے؟</p>
+        <p class="nastaleeq text-xs text-outline mt-1 leading-relaxed">اپنا حوالہ نمبر کیسے تلاش کریں۔</p>
+      </div>
     </div>
 
-    <div id="page2">
-        <header>
-            <div class="menu-icon" onclick="openSidebar()">☰</div>
-            <div>
-                <h1>Electricity Bill Check</h1>
-                <p class="tagline">Easily check your electricity bill online</p>
-            </div>
-        </header>
-
-        <h4>Enter your correct Reference Number</h4>
-        <input type="number" id="refNumber" placeholder="Enter your consumer id">
-        <div class="buttons">
-            <button onclick="navigateToPage3()">Check Bill</button>
-            <button onclick="navigateToPage1()">Back</button>
-            <p class="instruction-text urdu">اگر آپ کو بجلی کا بل نا ملیں تو دوبارہ کوشش کریں</p>
+    <!-- How to check bill -->
+    <section class="mt-16 bg-white rounded-3xl p-8 premium-shadow">
+      <h4 class="font-headline font-bold text-xl mb-6 flex items-center gap-2">
+        <span class="w-2 h-8 bg-secondary rounded-full inline-block"></span>
+        بل چیک کرنے کا طریقہ
+      </h4>
+      <div class="space-y-6">
+        <div class="flex gap-6 items-start">
+          <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 font-bold text-primary">1</div>
+          <div>
+            <p class="nastaleeq text-lg font-medium text-on-surface mb-1">اپنی بجلی کی کمپنی منتخب کریں</p>
+            <p class="text-sm text-on-surface-variant nastaleeq">اوپر دی گئی فہرست میں سے اپنی متعلقہ کمپنی کا انتخاب کریں۔</p>
+          </div>
         </div>
+        <div class="flex gap-6 items-start">
+          <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 font-bold text-primary">2</div>
+          <div>
+            <p class="nastaleeq text-lg font-medium text-on-surface mb-1">14 ہندسوں کا حوالہ نمبر درج کریں</p>
+            <p class="text-sm text-on-surface-variant nastaleeq">اپنے پرانے بل سے 14 ہندسوں کا Reference Number دیکھ کر لکھیں۔</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-4px_20px_rgba(0,53,127,0.06)] rounded-t-[24px] flex justify-around items-center px-4 py-2 border-t border-slate-100">
+    <a class="flex flex-col items-center justify-center text-[#00357f] px-4 py-1" href="#" onclick="showHome(); return false;">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">home</span>
+      <span class="nastaleeq text-lg leading-[1.3]">ہوم</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
+      <span class="material-symbols-outlined">share</span>
+      <span class="nastaleeq text-lg leading-[1.3]">شیئر</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-[#004aad]/10 text-[#00357f] rounded-2xl px-6 py-1 active:scale-90 duration-150" href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">more_horiz</span>
+      <span class="nastaleeq text-lg leading-[1.3]">مزید</span>
+    </a>
+  </nav>
+
+  <!-- History/Reload FAB -->
+  <button id="reloadBtn" class="fixed bottom-24 left-6 w-14 h-14 bg-gradient-to-br from-primary to-primary-container text-white rounded-full flex items-center justify-center premium-shadow active:scale-95 transition-transform z-40">
+    <span class="material-symbols-outlined">history</span>
+  </button>
+</div>
+
+<!-- ===================== PAGE 2: REFERENCE NUMBER ===================== -->
+<div id="page-ref" style="display:none;">
+  <!-- Top App Bar with Back -->
+  <header class="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
+    <div class="flex items-center gap-4">
+      <button onclick="showHome()" class="p-2 hover:bg-slate-100 rounded-full transition-colors active:scale-95 duration-200">
+        <span class="material-symbols-outlined text-primary text-2xl">arrow_back</span>
+      </button>
+    </div>
+ <div class="flex items-center justify-start">
+  <span class="nastaleeq text-xl text-[#00357f] font-bold leading-[1.8]">Pak Bill Checker</span>
+</div>
+  </header>
+
+  <main class="pt-24 pb-32 px-6 max-w-2xl mx-auto w-full">
+    <!-- Company Identity -->
+    <div class="mb-10 text-center relative">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent rounded-3xl blur-3xl h-64"></div>
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-surface-container-lowest shadow-[0_8px_30px_rgb(0,53,127,0.06)] mb-6 overflow-hidden">
+        <img id="ref-company-logo" alt="Company Logo" class="w-14 h-14 object-contain" src=""/>
+      </div>
+      <h2 class="nastaleeq text-3xl font-bold text-on-surface mb-1" id="ref-company-name">کمپنی</h2>
+      <p class="nastaleeq text-lg text-outline" id="ref-company-city"></p>
+      <p class="text-on-surface-variant font-body text-sm tracking-wide mt-2">ENTER YOUR REFERENCE NUMBER <br> بل پر دیا ہوا حوالا نمبر درج کریں۔</p>
     </div>
 
-    <iframe id="page3"></iframe>
-
-    <div class="popup-overlay" id="disclaimerPopup">
-        <div class="popup-content">
-            <button class="popup-close" onclick="closePopup()">×</button>
-            <h2>DISCLAIMER</h2>
-            <p>
-                The app doesn’t represent a government entity.This app is NOT affiliated with any government or electricity authority. Our app is merely a source of showing electricity bills to the users for their convenience. We only serve the purpose of an online electricity bill viewer. Our app is solely made for the convenience of users. The Data shown in the app is available online for the general public.
-                <br> The sources of the information are:
-                <br> ▶ https://bill.pitc.com.pk
-                <br> ▶ https://staging.ke.com.pk:24555
-                <br> We do not own or claim copyrights of the data shown in our app. Our app is a convenient way to view electricity bills online. It serves only as an electricity bill viewer for users. The data shown is publicly available.
-                <br> Privacy Policy: https://themiyaji.github.io/Pak_Bill_Checker/privacy-policy
-            </p>
-            <p>
-                Our app is solely made for the convenience of user. The Data shown in the app is available online for the general public. The information presented in this application about Electricity Bill is taken from different websites Online is taken directly from the respective websites of the concerned Sites.
-            </p>
-            <p>
-                The author of this application assumes no liability or responsibility for any errors or omissions in the content thus displayed and it does not reflect the genuineness of the bill or its documents / information. The Information presented is not applicable for any court and there is no responsibility of Developers/Software owner in any case or accident.
-            </p>
-            <a href="https://play.google.com/store/apps/developer?id=Miya+ji" class="popup-button">VISIT OUR MORE APPS</a>
+    <!-- Input Form -->
+    <section class="bg-surface-container-lowest rounded-3xl p-8 shadow-[0_4px_20px_rgba(0,53,127,0.04)] mb-8">
+      <div class="space-y-6">
+        <div class="relative">
+          <input id="billInput"
+            class="w-full h-16 px-6 text-2xl font-headline font-bold tracking-[0.2em] text-center bg-surface-container-highest rounded-2xl border-none focus:ring-2 focus:ring-primary/30 focus:bg-white transition-all placeholder:text-slate-300 placeholder:tracking-normal"
+            dir="ltr" placeholder="14123456789012" type="text" maxlength="14" inputmode="numeric"/>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="nastaleeq text-sm text-on-surface-variant">مثال: 14123456789012</span>
+            <span class="material-symbols-outlined text-primary/40">info</span>
+          </div>
         </div>
+        <button id="checkBillBtn"
+          class="w-full h-16 bg-gradient-to-br from-primary to-primary-container text-white rounded-full font-headline font-bold text-lg shadow-[0_16px_32px_rgba(0,53,127,0.15)] flex items-center justify-center gap-3 active:scale-[0.98] transition-all group">
+          <span class="nastaleeq text-xl">بل چیک کریں</span>
+          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">search</span>
+        </button>
+        <p class="nastaleeq text-center text-on-surface-variant text-base">
+          اگر آپ کو بجلی کا بل نا ملے تو 3 سیکنڈ بعد دوبارہ کوشش کریں
+        </p>
+      </div>
+    </section>
+
+    <!-- Guidelines -->
+    <section class="bg-surface-container-low rounded-3xl p-8 border border-white/50 mb-8">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">lightbulb</span>
+        <h3 class="nastaleeq text-2xl font-bold text-secondary">ہدایات</h3>
+      </div>
+      <ul class="space-y-5">
+        <li class="flex items-start gap-4">
+          <div class="w-2 h-2 rounded-full bg-secondary mt-3 shrink-0"></div>
+          <span class="nastaleeq text-lg text-on-surface flex-1">اپنا 14 ہندسوں والا ریفرنس نمبر درج کریں۔</span>
+        </li>
+        <li class="flex items-start gap-4">
+          <div class="w-2 h-2 rounded-full bg-secondary mt-3 shrink-0"></div>
+          <span class="nastaleeq text-lg text-on-surface flex-1">ریفرنس نمبر کے لیے اپنا پرانا بل دیکھیں۔</span>
+        </li>
+        <li class="flex items-start gap-4">
+          <div class="w-2 h-2 rounded-full bg-secondary mt-3 shrink-0"></div>
+          <span class="nastaleeq text-lg text-on-surface flex-1">اس بات کو یقینی بنائیں کہ کوئی جگہ (space) شامل نہیں ہے۔</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Visual Banner -->
+    <div class="rounded-3xl overflow-hidden relative h-40 group cursor-pointer">
+      <div class="w-full h-full bg-primary/5"></div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center bg-primary/10">
+        <span class="material-symbols-outlined text-primary mb-2">receipt_long</span>
+        <span class="nastaleeq text-lg font-bold text-primary">بل پر ریفرنس نمبر کہاں ہوتا ہے؟</span>
+      </div>
     </div>
+  </main>
 
-    <script>
-        document.getElementById('main-content').style.display = 'block';
+  <!-- Bottom Nav (Ref page) -->
+  <nav class="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-4px_20px_rgba(0,53,127,0.06)] rounded-t-[24px] flex justify-around items-center px-4 py-2 border-t border-slate-100">
+    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors" href="#" onclick="showHome(); return false;">
+      <span class="material-symbols-outlined">home</span>
+      <span class="nastaleeq text-lg leading-[1.3]">ہوم</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-[#00357f] transition-colors" href="https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker" target="_blank">
+      <span class="material-symbols-outlined">share</span>
+      <span class="nastaleeq text-lg leading-[1.3]">شیئر</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-[#004aad]/10 text-[#00357f] rounded-2xl px-6 py-1 active:scale-90 duration-150" href="https://play.google.com/store/apps/developer?id=Fasial+Javed" target="_blank">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">more_horiz</span>
+      <span class="nastaleeq text-lg leading-[1.3]">مزید</span>
+    </a>
+  </nav>
+</div>
 
-        setTimeout(function () {
-            showAdmobAd();
-        }, 12500);
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+  // ---- State ----
+  let currentCompany = '';
 
-        let currentUrl = '';
-        let currentCompany = '';
+  // URL builder per company — matches pak_bill_checker.html logic
+  function getBillUrl(company, refNumber) {
+    const pitcBase = `https://bill.pitc.com.pk/pitc/route_access/${refNumber}`;
+    if (company === 'LESCO') {
+      // LESCO uses a different API with batch/subdiv/ref breakdown
+      const batchNo = refNumber.substring(0, 2);
+      const subDiv  = refNumber.substring(2, 7);
+      const refNo   = refNumber.substring(7);
+      return `https://bill.pitc.com.pk/lescobill/general?BatchNo=${batchNo}&SubDiv=${subDiv}&RefNo=${refNo}&RU=U&CapCode=QAED`;
+    }
+    // All other PITC companies use the generic route
+    return pitcBase;
+  }
 
-        function navigateToPage2(company, url) {
-            currentCompany = company;
-            currentUrl = url;
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('page2').style.display = 'block';
-        }
+  // Validate: accept 8, 10, or 14 digit numeric strings (matches refernce-number-screen.html)
+  function isValidRef(val) {
+    return /^\d{8}$|^\d{10}$|^\d{14}$/.test(val);
+  }
 
-        function navigateToPage1() {
-            document.getElementById('page2').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-        }
+  // ---- Page Navigation ----
+  function showHome() {
+    document.getElementById('page-ref').style.display = 'none';
+    document.getElementById('page-home').style.display = 'block';
+    window.scrollTo(0, 0);
+    // clear input
+    document.getElementById('billInput').value = '';
+  }
 
-        function navigateToPage3() {
-            const refNumber = document.getElementById('refNumber').value.trim();
-            if (currentCompany === 'LESCO') {
-                if (!/^\d{6,21}$/.test(refNumber)) {
-                    alert('Please enter a valid 14-digit reference number for Bill Check!');
-                    return;
-                }
-                const batchNo = refNumber.substring(0, 2);
-                const subDiv = refNumber.substring(2, 7);
-                const refNo = refNumber.substring(7);
-                const fullUrl = `${currentUrl}?BatchNo=${batchNo}&SubDiv=${subDiv}&RefNo=${refNo}&RU=U&CapCode=QAED`;
-                window.open(fullUrl, '_blank');
-            } else {
-                if (!refNumber) {
-                    alert('Please enter a valid reference number!');
-                    return;
-                }
-                const fullUrl = currentUrl + refNumber;
-                window.open(fullUrl, '_blank');
-            }
-        }
+  function showRefPage(company, city, logoSrc, logoKey) {
+    currentCompany = company;
+    document.getElementById('ref-company-name').textContent = company;
+    document.getElementById('ref-company-city').textContent = city;
+    document.getElementById('ref-company-logo').src = logoSrc;
+    document.getElementById('ref-company-logo').alt = company + ' Logo';
+    document.getElementById('billInput').value = '';
+    document.getElementById('page-home').style.display = 'none';
+    document.getElementById('page-ref').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
 
-        window.onpopstate = function(event) {
-            if (document.getElementById('page3').style.display === 'block') {
-                document.getElementById('page3').style.display = 'none';
-                document.getElementById('page2').style.display = 'block';
-            } else if (document.getElementById('page2').style.display === 'block') {
-                document.getElementById('page2').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-            }
-        };
+  // ---- Check Bill Button ----
+  document.getElementById('checkBillBtn').addEventListener('click', () => {
+    const userInput = document.getElementById('billInput').value.trim();
+    if (isValidRef(userInput)) {
+      const url = getBillUrl(currentCompany, userInput);
+      window.open(url, '_blank');
+    } else {
+      alert('براہ کرم درست 8، 10، یا 14 ہندسوں والا نمبر درج کریں');
+    }
+  });
 
-        function openSidebar() {
-            document.getElementById('sidebar').style.width = '250px';
-        }
+  // Allow pressing Enter in input field
+  document.getElementById('billInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('checkBillBtn').click();
+  });
 
-        function closeSidebar() {
-            document.getElementById('sidebar').style.width = '0';
-        }
+  // ---- Sidebar ----
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  const sidebarPanel   = document.getElementById('sidebarPanel');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
-        function showAdmobAd() {
-            (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: 'ca-pub-8532990939',
-                enable_page_level_ads: true
-            });
-        }
+  function openSidebar() {
+    sidebarOverlay.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    requestAnimationFrame(() => {
+      sidebarPanel.classList.remove('translate-x-full');
+      sidebarPanel.classList.add('translate-x-0');
+    });
+  }
 
-        function toggleDropdown(event) {
-            event.preventDefault();
-            const dropdown = event.target.closest('.support-dropdown');
-            dropdown.classList.toggle('active');
-        }
+  function closeSidebar() {
+    sidebarPanel.classList.remove('translate-x-0');
+    sidebarPanel.classList.add('translate-x-full');
+    document.body.classList.remove('overflow-hidden');
+    setTimeout(() => sidebarOverlay.classList.add('hidden'), 300);
+  }
 
-        function showPopup() {
-            document.getElementById('disclaimerPopup').style.display = 'flex';
-        }
+  document.getElementById('openSidebarBtn').addEventListener('click', openSidebar);
+  document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
+  sidebarBackdrop.addEventListener('click', closeSidebar);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !sidebarOverlay.classList.contains('hidden')) closeSidebar();
+  });
 
-        function closePopup() {
-            document.getElementById('disclaimerPopup').style.display = 'none';
-        }
-    </script>
+  // ---- Disclaimer ----
+  function openDisclaimer() {
+    closeSidebar();
+    setTimeout(() => {
+      document.getElementById('disclaimerModal').classList.remove('hidden');
+      document.getElementById('disclaimerModal').classList.add('flex');
+    }, 320);
+  }
+  function closeDisclaimer() {
+    document.getElementById('disclaimerModal').classList.add('hidden');
+    document.getElementById('disclaimerModal').classList.remove('flex');
+  }
+
+  // ---- Share App ----
+  function copyAppLink() {
+    const link = "https://play.google.com/store/apps/details?id=com.faisal.pakbillchecker";
+    if (navigator.share) {
+      navigator.share({ title: "پاک بل چیکر", text: "پاکستان کا نمبر 1 بل چیکر", url: link }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(link).then(() => alert("لنک کاپی ہو گیا!"));
+    }
+  }
+
+  // ---- Reload / History FAB ----
+  document.getElementById('reloadBtn').addEventListener('click', () => location.reload());
+
+  // ---- Search ----
+  document.getElementById('search-input').addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    document.querySelectorAll('.company-card').forEach(card => {
+      const term = (card.getAttribute('data-search-term') || card.textContent).toLowerCase();
+      card.style.display = (query === '' || term.includes(query)) ? '' : 'none';
+    });
+  });
+
+  // ---- Browser back button support ----
+  window.addEventListener('popstate', () => {
+    if (document.getElementById('page-ref').style.display !== 'none') showHome();
+  });
+</script>
+
 </body>
 </html>
