@@ -448,18 +448,18 @@
   // ---- State ----
   let currentCompany = '';
 
-  // URL builder per company — matches pak_bill_checker.html logic
+  // URL builder per company
   function getBillUrl(company, refNumber) {
-    const pitcBase = `https://bill.pitc.com.pk/pitc/route_access/${refNumber}`;
     if (company === 'LESCO') {
-      // LESCO uses a different API with batch/subdiv/ref breakdown
+      // LESCO special case: different URL structure
+      // Split 14-digit number: BatchNo (first 2) + SubDiv (next 5) + RefNo (last 7)
       const batchNo = refNumber.substring(0, 2);
       const subDiv  = refNumber.substring(2, 7);
       const refNo   = refNumber.substring(7);
-      return `https://bill.pitc.com.pk/lescobill/general?BatchNo=${batchNo}&SubDiv=${subDiv}&RefNo=${refNo}&RU=U&CapCode=QAED`;
+      return `http://www.lesco.gov.pk:36269/BillNew.aspx?BatchNo=${batchNo}&SubDiv=${subDiv}&RefNo=${refNo}&RU=U`;
     }
     // All other PITC companies use the generic route
-    return pitcBase;
+    return `https://bill.pitc.com.pk/pitc/route_access/${refNumber}`;
   }
 
   // Validate: accept 8, 10, or 14 digit numeric strings (matches refernce-number-screen.html)
